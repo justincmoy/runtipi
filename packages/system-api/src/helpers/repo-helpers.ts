@@ -1,8 +1,8 @@
 import { runScript } from '../modules/fs/fs.helpers';
 
-export const updateRepo = (repo: string): Promise<void> => {
+export const updateRepo = (repo: string, branch: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    runScript('/scripts/git.sh', ['update', repo], (err: string, stdout: string) => {
+    runScript('/scripts/git.sh', ['update', repo, branch], (err: string, stdout: string) => {
       if (err) {
         reject(err);
       }
@@ -14,9 +14,9 @@ export const updateRepo = (repo: string): Promise<void> => {
   });
 };
 
-export const cloneRepo = (repo: string): Promise<void> => {
+export const cloneRepo = (repo: string, branch: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    runScript('/scripts/git.sh', ['clone', repo], (err: string, stdout: string) => {
+    runScript('/scripts/git.sh', ['clone', repo, branch], (err: string, stdout: string) => {
       if (err) {
         reject(err);
       }

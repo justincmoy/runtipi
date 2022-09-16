@@ -8,7 +8,7 @@ const startJobs = () => {
 
   cron.schedule('0 * * * *', () => {
     logger.info('Cloning apps repo...');
-    updateRepo(config.APPS_REPO_URL);
+    updateRepo(config.APPS_REPO_URL, config.APPS_REPO_BRANCH);
   });
 };
 

@@ -17,6 +17,9 @@ NGINX_PORT_SSL=443
 PROXY_PORT=8080
 DOMAIN=tipi.localhost
 
+APPS_REPOSITORY="https://github.com/meienberger/runtipi-appstore"
+APPS_REPOSITORY_BRANCH="master"
+
 while [ -n "$1" ]; do # while loop starts
   case "$1" in
   --rc) rc="true" ;;
@@ -65,6 +68,14 @@ while [ -n "$1" ]; do # while loop starts
     fi
     shift
     ;;
+  --apps-repository)
+    APPS_REPOSITORY="$2"
+    shift
+    ;;
+  --apps-repository-branch)
+    APPS_REPOSITORY_BRANCH="$2"
+    shift
+    ;;
   --)
     shift # The double dash makes them parameters
     break
@@ -101,7 +112,6 @@ INTERNAL_IP="$(ip addr show "${NETWORK_INTERFACE}" | grep "inet " | awk '{print 
 DNS_IP=9.9.9.9 # Default to Quad9 DNS
 ARCHITECTURE="$(uname -m)"
 TZ="$(timedatectl | grep "Time zone" | awk '{print $3}' | sed 's/\//\\\//g' || Europe\/Berlin)"
-APPS_REPOSITORY="https://github.com/meienberger/runtipi-appstore"
 REPO_ID="$(${ROOT_FOLDER}/scripts/git.sh get_hash ${APPS_REPOSITORY})"
 APPS_REPOSITORY_ESCAPED="$(echo ${APPS_REPOSITORY} | sed 's/\//\\\//g')"
 
@@ -189,6 +199,7 @@ for template in ${ENV_FILE}; do
   sed -i "s/<postgres_password>/${POSTGRES_PASSWORD}/g" "${template}"
   sed -i "s/<apps_repo_id>/${REPO_ID}/g" "${template}"
   sed -i "s/<apps_repo_url>/${APPS_REPOSITORY_ESCAPED}/g" "${template}"
+  sed -i "s/<apps_repo_branch>/${APPS_REPOSITORY_BRANCH}/g" "${template}"
   sed -i "s/<domain>/${DOMAIN}/g" "${template}"
 done
 

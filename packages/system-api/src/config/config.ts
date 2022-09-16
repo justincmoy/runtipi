@@ -14,6 +14,7 @@ interface IConfig {
   ROOT_FOLDER_HOST: string;
   APPS_REPO_ID: string;
   APPS_REPO_URL: string;
+  APPS_REPO_BRANCH: string;
   INTERNAL_IP: string;
 }
 
@@ -35,6 +36,7 @@ const {
   NGINX_PORT = '80',
   APPS_REPO_ID = '',
   APPS_REPO_URL = '',
+  APPS_REPO_BRANCH = 'master',
   DOMAIN = '',
 } = process.env;
 
@@ -52,6 +54,7 @@ const config: IConfig = {
   ROOT_FOLDER_HOST,
   APPS_REPO_ID,
   APPS_REPO_URL,
+  APPS_REPO_BRANCH,
   INTERNAL_IP,
 };
 
